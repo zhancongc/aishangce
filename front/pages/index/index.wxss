@@ -1,0 +1,62 @@
+/**index.wxss**/
+.swiper {
+  width: 100%;
+  height: 800rpx;
+}
+.slide-image{
+  width: 100%;
+  height: 100rpx;
+}
+
+.container {
+  width: 94%;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.container-title {
+  font-weight: bold;
+  font-size: 40rpx;
+  line-height: 100rpx;
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  width: 46%;
+  border-radius: 10rpx;
+  text-align: center;
+  background: #096064;
+  box-shadow: 0 6rpx 10rpx #ababab;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.card image {
+  width: 100%;
+  height: 200rpx;
+}
+
+.card-title {
+  padding-bottom: 8rpx;
+  background-color: #096064;
+  color: white;
+}
+
+.illumination {
+  width: 100%;
+  height: 80rpx;
+  text-align: center;
+  color: #777777;
+  font-size: 30rpx;
+}
+
+.illumination image {
+  width: 12px;
+  height: 12px;
+}

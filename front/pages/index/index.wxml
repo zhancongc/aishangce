@@ -1,0 +1,32 @@
+<!--index.wxml-->
+<swiper indicator-dots="{{indicatorDots}}"
+  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+  <block wx:for="{{[cards[4],cards[5]]}}">
+    <swiper-item>
+      <image src="{{item.imageUri}}" class="slide-image" style="height:200px"/>
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class="container">
+  <view class="container-title">Recommendation</view>
+  <view class="cards">
+    <view class='card' wx:for="{{[cards[4],cards[5]]}}" wx:key="{{item.id}}" bindtap='toDetails' data-cardid="{{item.id}}">
+      <image src="{{item.imageUri}}"></image>
+      <view class="card-title">{{item.cardName}}</view>
+    </view>
+  </view>
+</view>
+
+<view class="container">
+  <view class="container-title">All kinds of destination</view>
+  <view class="cards">
+    <view class="card" wx:for="{{[cards[0],cards[1],cards[2],cards[3]]}}" wx:key="item.id" bindtap="toDetails" data-cardid="{{item.id}}">
+      <image src="{{item.imageUri}}"></image>
+      <view class="card-title">{{item.cardName}}</view>
+    </view>
+  </view>
+  <view class="illumination">
+  <image src="/images/history_record.png"></image>
+  Purchase History</view>
+</view>

@@ -1,0 +1,19 @@
+<!--pages/details/details.wxml-->
+<view class="container">
+  <image src="{{image}}"></image>
+  <view class="cards-title">choose your favourite</view>
+  <view class="cards">
+    <view class="{{item.active ? 'card-active' : 'card'}}" wx:for="{{giftCards}}" wx:key="item.id">
+      <image src="{{item.imageUri}}" bindtap="chooseCard" data-index="{{item.id}}"></image>
+    </view>
+  </view>
+  <view class="cards-title">choose the amount</view>
+  <view class="cards">
+    <view class="{{item.active ? 'card-active' : 'card'}}" wx:for="{{giftCards}}" wx:key="item.id" >
+      <view class="card-price" data-index="{{item.id}}" bindtap="chooseCard">${{item.cardPrice}}</view>
+      <view class="card-name" data-index="{{item.id}}" bindtap="chooseCard">{{item.cardName}}</view>
+    </view>
+  </view>
+  <button type="primary">Order</button>
+</view>
+
