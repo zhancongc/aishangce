@@ -1,4 +1,4 @@
-// pages/details/details.js
+// pages/test/test.js
 const app = getApp()
 
 Page({
@@ -7,15 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    test: {}
+    test:{}
   },
-  toTest : function(e) {
-    var testid = e.currentTarget.dataset.testid;
-    console.log('testid'+testid);
-    wx.navigateTo({
-      url: "/pages/test/test?testid=" + testid
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

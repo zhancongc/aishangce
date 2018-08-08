@@ -2,12 +2,13 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/details/details"
+    "pages/details/details",
+    "pages/test/test"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#096064",
-    "navigationBarTitleText": "Journey",
+    "navigationBarTitleText": "爱上测",
     "navigationBarTextStyle":"white"
   }
 }
