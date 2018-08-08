@@ -11,7 +11,6 @@ Page({
   },
   toTest : function(e) {
     var testid = e.currentTarget.dataset.testid;
-    console.log('testid'+testid);
     wx.navigateTo({
       url: "/pages/test/test?testid=" + testid
     })
@@ -20,7 +19,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.testid);
     var that = this;
     that.setData({
       test: app.globalData.cards[options.testid]

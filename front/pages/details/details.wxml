@@ -1,6 +1,6 @@
 <view class='container'>
   <image src='{{test.image}}'></image>
   <view class='title'>{{test.title}}</view>
-  <view class='content'>{{test.content}}</view>
-  <view type='primary' bindtap='toTest' data-testid='{{item.id}}'>开始</view>
+  <view class='content'>{{test.intro}}</view>
+  <button type='primary' bindtap='toTest' data-testid='{{test.id}}'>开始</button>
 </view>
