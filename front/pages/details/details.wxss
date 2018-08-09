@@ -18,7 +18,7 @@
 
 .content {
   width: 90%;
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: #7b7b7b;
   margin: 0 auto;
   margin-top: 20rpx;
