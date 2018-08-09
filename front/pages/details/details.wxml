@@ -1,6 +1,11 @@
 <view class='container'>
   <image src='{{test.image}}'></image>
-  <view class='title'>{{test.title}}</view>
-  <view class='content'>{{test.intro}}</view>
-  <button type='primary' bindtap='toTest' data-testid='{{test.id}}'>开始</button>
+  <view wx:if='{{title_display!=false}}' class='title'>{{test.title}}</view>
+  <view wx:if='{{title_display!=false}}' class='content'>{{test.intro}}</view>
+  <view class='question' wx:if='{{question_display!=false}}'>
+    <view class='question-title'>{{test.question[0].id+1}}.{{test.question[0].title}}</view>
+    <view class='question-options' wx:for='{{test.question[0].options}}'><text>{{item}}</text></view>
+  </view>
+  <button wx:if='{{title_display!=false}}' type='primary' bindtap='startTest'>开始测试</button>
+    <button wx:if='{{question_display!=false}}' type='primary' bindtap=''>上一题</button>
 </view>

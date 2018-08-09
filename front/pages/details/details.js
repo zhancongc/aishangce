@@ -7,12 +7,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title_display: true,
+    question_display: false,
     test: {}
   },
-  toTest : function(e) {
-    var testid = e.currentTarget.dataset.testid;
-    wx.navigateTo({
-      url: "/pages/test/test?testid=" + testid
+  startTest : function (e) {
+    this.setData({
+      title_display : false,
+      question_display: true
     })
   },
   /**
