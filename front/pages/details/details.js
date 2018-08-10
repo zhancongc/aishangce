@@ -22,7 +22,8 @@ Page({
   startTest : function (e) {
     this.setData({
       title_display : false,
-      question_display: true,
+      share: '',
+      question_set: [],
       question_number: this.data.test.question[0].id + 1,
       question_title: this.data.test.question[0].title,
       question_options: this.data.test.question[0].options,
@@ -51,7 +52,8 @@ Page({
       title_display: true,
       question_display: false,
       question_number: 0,
-      startbotton: '再测一遍',
+      share: 'share',
+      startbotton: '分享给朋友',
       title: this.data.test.result[type].title,
       intro: this.data.test.result[type].content
     })
@@ -94,7 +96,7 @@ Page({
     })
     app.AppMusic.seek(60);
     app.AppMusic.src = 'http://bestbwzs.com/music/%E5%AE%97%E6%AC%A1%E9%83%8E%20-%20%E3%81%84%E3%81%A4%E3%82%82%E4%BD%95%E5%BA%A6%E3%81%A7%E3%82%82.mp3';
-    app.AppMusic.play();
+    /*app.AppMusic.play();*/
   },
 
   /**

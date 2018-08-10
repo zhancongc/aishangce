@@ -50,10 +50,11 @@
   margin-top: 30rpx;
   margin-bottom: 10rpx;
   font-size: 32rpx;
-  border: 1rpx solid #096064;
+  border: 1rpx solid #787878;
   border-radius: 10rpx;
-  box-shadow: 0 6rpx 10rpx #ababab;
+  box-shadow: 0 4rpx 10rpx #ababab;
 }
+
 .question-options text {
   position: relative;
   left: 3%;
