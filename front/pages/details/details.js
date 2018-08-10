@@ -17,7 +17,7 @@ Page({
     question_options: [],
     question_next: [],
     question_display: false,
-    question_set: []
+    question_set: [],
   },
   startTest : function (e) {
     this.setData({
@@ -30,11 +30,15 @@ Page({
     })
   },
   next: function next(question_id){
-    var temp = this.data.question_number;
-    console.log('question_set' + typeof(this.data.question_set));
-    var arr = this.data.question_set.push(temp);
+    var temp = this.data.question_number-1;
+    console.log('question_set前', this.data.question_set);
+    if (temp<question_id) {
+      var arr = this.data.question_set.push(temp);
+    }else if (temp>question_id) {
+      var arr = this.data.question_set.pop();
+    }
+    console.log('question_set后', this.data.question_set);
     this.setData({
-      questions: arr,
       question_number: this.data.test.question[question_id].id + 1,
       question_title: this.data.test.question[question_id].title,
       question_options: this.data.test.question[question_id].options,
@@ -43,7 +47,6 @@ Page({
   },
   result: function result(question_id){
     var type = parseInt(Math.abs(question_id))-1;
-    console.log('type'+type);
     this.setData({
       title_display: true,
       question_display: false,
@@ -54,7 +57,6 @@ Page({
     })
   },
   nextQuestion: function (e) {
-    console.log('question_set' + this.data.question_set);
     var question = this.data.test.question;
     var options = question[this.data.question_number-1].options;
     var option_id = options.indexOf(e.currentTarget.dataset.option);
@@ -65,9 +67,15 @@ Page({
     } else {
       this.result(question_id);
     }
+    console.log('下一题堆栈', this.data.question_set);
   },
   previousQuestion : function (){
-    this.next(this.data.questions[this.data.questions.length-1])
+    console.log('上一题堆栈', this.data.question_set);
+    if(this.data.question_set!=''){
+      var index = this.data.question_set.length - 1;
+      console.log('index'+index);
+      this.next(this.data.question_set[index])
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -84,6 +92,9 @@ Page({
     wx.setNavigationBarTitle({
       title: that.data.test.title
     })
+    app.AppMusic.seek(60);
+    app.AppMusic.src = 'http://bestbwzs.com/music/%E5%AE%97%E6%AC%A1%E9%83%8E%20-%20%E3%81%84%E3%81%A4%E3%82%82%E4%BD%95%E5%BA%A6%E3%81%A7%E3%82%82.mp3';
+    app.AppMusic.play();
   },
 
   /**
@@ -111,7 +122,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+    app.AppMusic.pause();
   },
 
   /**

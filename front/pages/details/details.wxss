@@ -56,6 +56,6 @@
 }
 .question-options text {
   position: relative;
-  left: 5%;
+  left: 3%;
   top: 15rpx;
 }
