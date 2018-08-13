@@ -1,10 +1,10 @@
-use test;
+use aishangce;
 db.test.insert({
 'id':0,
 'type': 'next',
 'image':'http://bestbwzs.com/images/camera.jpg',
 'title':'你在爱情中“受伤率”有多高',
-'intro':'爱情中免不了受伤，你会是最容易受伤的哪个吗？'
+'intro':'爱情中免不了受伤，你会是最容易受伤的哪个吗？',
 'question': [{
     'id': 0,
     'title': '你觉得自己运气还不错？',
