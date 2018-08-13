@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from config import config
 
 
-
 db = SQLAlchemy()
 
 
@@ -19,7 +18,6 @@ def create_app(config_name):
 app = create_app('development')
 
 
-
 @app.route('/')
 def index():
     return 'Hello, world!'
@@ -30,7 +28,7 @@ def test(test_id):
     return 'test: {id}'.format(id=test_id)
 
 
-@app.route('/test', methods=['POST'])
+@app.route('/test', methods=['GET', 'POST'])
 def test_data():
     test_id = request.values.get('test_id')
     client = pymongo.MongoClient(host='127.0.0.1', port=27017)
@@ -197,7 +195,6 @@ def test_data():
                  ]
              }]}
     '''
-
 
 
 if __name__ == '__main__':
