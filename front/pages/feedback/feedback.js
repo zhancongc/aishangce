@@ -1,24 +1,20 @@
-// pages/test/test.js
-const app = getApp()
-
+// pages/feedback/feedback.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    test:{}
+  
   },
-
+  feedback : function (e) {
+    
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.testid);
-    var that = this;
-    that.setData({
-      test: app.globalData.cards[options.testid]
-    })
+  
   },
 
   /**

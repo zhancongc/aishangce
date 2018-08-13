@@ -1,12 +1,12 @@
 <view class='container'>
   <image src='{{test.image}}'></image>
-  <view wx:if='{{question_number==0}}' class='title'>{{title}}</view>
-  <view wx:if='{{question_number==0}}' class='content'>{{intro}}</view>
+  <view wx:if='{{question_number<=0}}' class='title'>{{title}}</view>
+  <view wx:if='{{question_number<=0}}' class='content'>{{intro}}</view>
   <view class='question' wx:if='{{question_number>0}}'>
     <view class='question-title'>{{question_number}}.{{question_title}}</view>
     <view class='question-options' wx:for='{{question_options}}'  bindtap='nextQuestion' data-option='{{item}}'><text>{{item}}</text></view>
   </view>
-    <button wx:if='{{question_number==0}}' type='primary' bindtap='startTest' open-type='{{share}}'>{{startbotton}}</button>
+    <button wx:if='{{question_number==0}}' type='primary' bindtap='startTest' open-type='{{share}}'>开始测试</button>
     <button wx:if='{{question_number<0}}' type='primary' open-type="share">分享给朋友</button>
-    <button wx:if='{{question_number>0}}' type='primary' bindtap='previousQuestion'>上一题</button>
+    <button wx:if='{{question_number>1}}' type='primary' bindtap='previousQuestion'>上一题</button>
 </view>

@@ -49,3 +49,13 @@
   top: -40rpx;
   margin: 0 auto;
 }
+
+.feedback {
+  width: 100%;
+  height: 80rpx;
+  margin-top: 0rpx;
+  margin-bottom: 0rpx;
+  text-align: center;
+  font-size: 32rpx;
+  color: #096064;
+}

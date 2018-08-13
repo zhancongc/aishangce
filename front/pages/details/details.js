@@ -11,7 +11,6 @@ Page({
     title: '',
     intro: '',
     title_display: true,
-    startbotton: '开始测试',
     question_number: 0,
     question_title: '',
     question_options: [],
@@ -32,13 +31,12 @@ Page({
   },
   next: function next(question_id){
     var temp = this.data.question_number-1;
-    console.log('question_set前', this.data.question_set);
     if (temp<question_id) {
       var arr = this.data.question_set.push(temp);
     }else if (temp>question_id) {
       var arr = this.data.question_set.pop();
     }
-    console.log('question_set后', this.data.question_set);
+    console.log('question_set', this.data.question_set);
     this.setData({
       question_number: this.data.test.question[question_id].id + 1,
       question_title: this.data.test.question[question_id].title,
@@ -51,9 +49,8 @@ Page({
     this.setData({
       title_display: true,
       question_display: false,
-      question_number: 0,
+      question_number: question_id,
       share: 'share',
-      startbotton: '分享给朋友',
       title: this.data.test.result[type].title,
       intro: this.data.test.result[type].content
     })
@@ -63,7 +60,6 @@ Page({
     var options = question[this.data.question_number-1].options;
     var option_id = options.indexOf(e.currentTarget.dataset.option);
     var question_id = question[this.data.question_number - 1].next[option_id];
-    console.log('question_id'+question_id);
     if (question_id > 0){
       this.next(question_id);
     } else {
@@ -94,9 +90,9 @@ Page({
     wx.setNavigationBarTitle({
       title: that.data.test.title
     })
-    app.AppMusic.seek(60);
+    /*app.AppMusic.seek(60);
     app.AppMusic.src = 'http://bestbwzs.com/music/%E5%AE%97%E6%AC%A1%E9%83%8E%20-%20%E3%81%84%E3%81%A4%E3%82%82%E4%BD%95%E5%BA%A6%E3%81%A7%E3%82%82.mp3';
-    /*app.AppMusic.play();*/
+    app.AppMusic.play();*/
   },
 
   /**
@@ -124,7 +120,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    app.AppMusic.pause();
+    /*app.AppMusic.pause();*/
   },
 
   /**
@@ -145,6 +141,16 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+    return {
+      title: this.data.test.title,
+      path: 'pages/details/details?testid='+this.data.test.id,
+      
+      success: (res) => {
+
+      },
+      fail: (res) => {
+        
+      }
+    }
   }
 })

@@ -13,7 +13,7 @@
   color: black;
   width: 90%;
   margin: 0 auto;
-  margin-top: 20rpx;
+  margin-top: 30rpx;
 }
 
 .content {
@@ -60,3 +60,4 @@
   left: 3%;
   top: 15rpx;
 }
+

@@ -1,0 +1,11 @@
+/* pages/feedback/feedback.wxss */
+
+.container {
+  width: 94%;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+button {
+  margin-top: 20rpx;
+}

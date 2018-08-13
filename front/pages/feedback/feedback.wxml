@@ -1,0 +1,5 @@
+<!--pages/feedback/feedback.wxml-->
+<view class='container'>
+<textarea placeholder='吐槽一下吧 ^_^' auto-focus='true' maxlength='200'></textarea>
+<button class='submit' type='primary' bindtap='feedback'>提交</button>
+</view>

@@ -9,4 +9,5 @@
       <view class='card-intro'>{{item.intro}}</view>
     </view>
   </view>
+  <view class='feedback' bindtap='toFeedback'>意见反馈</view>
 </view>
