@@ -1,17 +1,12 @@
 import pymongo
 from flask import Flask, jsonify, request
-from flask_sqlalchemy import SQLAlchemy
 from config import config
-
-
-db = SQLAlchemy()
 
 
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
-    db.init_app(app)
     return app
 
 
@@ -23,12 +18,23 @@ def index():
     return 'Hello, world!'
 
 
-@app.route('/test/<test_id>')
-def test(test_id):
-    return 'test: {id}'.format(id=test_id)
+@app.route('/feedback', methods=['POST'])
+def feedback():
+    user_id = request.values.get('user_id')
+    nickname = request.values.get('nickname')
+    weixin = request.values.get('weixin')
+    content = request.values.get('content')
+    time_stamp = request.values.get('time_stamp')
+    json_data = {'user_id': user_id, 'nickname': nickname, 'weixin': weixin,
+                 'content': content, 'time_stamp': time_stamp}
+    client = pymongo.MongoClient(host='127.0.0.1', port=27017)
+    db = client.aishangce
+    db.feedback.insert(json_data)
+    res = {'operation': True}
+    return jsonify(res)
 
 
-@app.route('/test', methods=['GET', 'POST'])
+@app.route('/test', methods=['POST'])
 def test_data():
     test_id = request.values.get('test_id')
     if test_id is None:
