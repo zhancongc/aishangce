@@ -11,10 +11,6 @@ class Config(object):
     # csrf key
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
 
-    # ip
-    GCLD_IP = '10.5.201.58'
-    NHLY_IP = '10.5.201.60'
-
     # folder maintains uploaded file
     UPLOAD_FOLDER = basedir + '/files/upload/'
     # folder maintains out file
@@ -34,8 +30,6 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     pass
-    #database uri
-    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:security@localhost:3306/gametool?charset=utf8mb4'
 
 
 config = {
