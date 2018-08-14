@@ -20,12 +20,11 @@ def index():
 
 @app.route('/feedback', methods=['POST'])
 def feedback():
-    user_id = request.values.get('user_id')
     nickname = request.values.get('nickname')
     weixin = request.values.get('weixin')
     content = request.values.get('content')
     time_stamp = request.values.get('time_stamp')
-    json_data = {'user_id': user_id, 'nickname': nickname, 'weixin': weixin,
+    json_data = {'nickname': nickname, 'weixin': weixin,
                  'content': content, 'time_stamp': time_stamp}
     client = pymongo.MongoClient(host='127.0.0.1', port=27017)
     db = client.aishangce
