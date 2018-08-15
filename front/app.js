@@ -11,26 +11,23 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     var tests = [];
-    for(var i=0; i<3; i++) {
-      wx.request({
-        url: 'https://wx.bestbwzs.com/test',
-        method: 'POST',
-        data: { 'test_id': i },
-        header: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        success: function (res) {
+    wx.request({
+      url: 'https://wx.bestbwzs.com/index',
+      method: 'get',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
 
-        },
-        fail: function (res) {
+      },
+      fail: function (res) {
 
-        },
-        complete: function (res) {
-          console.log(res.data);
-          tests.push(res.data);
-        }
-      })
-    }
+      },
+      complete: function (res) {
+        console.log(res.data);
+        tests = res.data;
+      }
+    })
     this.globalData.cards = tests;
     //this.globalData.cards.push(test1, test2, test3);
 
@@ -69,26 +66,6 @@ App({
     this.AppMusic.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)
-    })
-  },
-  getTest : function (test_id) {
-    wx.request({
-      url: 'https://wx.bestbwzs.com/test',
-      method : 'POST',
-      data: {'test_id': test_id},
-      header : {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      success : function(res) {
-
-      },
-      fail : function(res) {
-
-      },
-      complete: function(res) {
-        console.log(res.data);
-        this.globalData.cards.push(res.data);
-      }
     })
   }
 })

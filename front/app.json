@@ -1,6 +1,7 @@
 
 {
   "pages":[
+    "pages/loading/loading",
     "pages/index/index",
     "pages/details/details",
     "pages/feedback/feedback"
