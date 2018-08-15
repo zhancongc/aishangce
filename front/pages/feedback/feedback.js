@@ -8,7 +8,29 @@ Page({
   
   },
   feedback : function (e) {
-    
+    var data = {
+      'weixin': e.detail.value.weixin == undefined ? '' : e.detail.value.weixin,
+      'content': e.detail.value.content == undefined ? '' : e.detail.value.content}
+    wx.showLoading({
+      title: '提交中',
+      mask: true,
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+    wx.request({
+      url: 'https://wx.bestbwzs.com/feedback',
+      method: 'POST',
+      data: data,
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {},
+      fail: function (res) {},
+      complete: function (res) {
+        wx.hideLoading();
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载

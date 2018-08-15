@@ -8,8 +8,10 @@ class Config(object):
     DEBUG = True
     # enable csrf
     CSRF_ENABLED = True
+    # mini program's
+    APP_ID = 'wx107f16d433135388'
     # csrf key
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
+    APP_SECRET = os.environ.get('APP_SECRET') or '123456'
 
     # folder maintains uploaded file
     UPLOAD_FOLDER = basedir + '/files/upload/'

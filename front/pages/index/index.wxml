@@ -1,7 +1,7 @@
 <!--index.wxml-->
 
 <view class='container'>
-  <view class='title'>今日推荐</view>
+  <view class='title'>推荐</view>
   <view wx:if='{{loaded}}' class='content'>
     <view class='card' wx:for='{{cards}}' wx:key='{{item.id}}' bindtap='toDetails' data-testid='{{item.id}}'>
       <view class='card-title'>{{item.title}}</view>

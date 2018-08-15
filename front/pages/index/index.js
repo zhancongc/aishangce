@@ -26,6 +26,10 @@ Page({
     var that = this;
     wx.showLoading({
       title: '加载中',
+      mask: true,
+      success: function (res) {},
+      fail: function (res) {},
+      complete: function (res) {},
     })
     that.setData({
       loaded: false

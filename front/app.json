@@ -1,9 +1,10 @@
 
 {
   "pages":[
+    "pages/feedback/feedback",
     "pages/index/index",
-    "pages/details/details",
-    "pages/feedback/feedback"
+    "pages/details/details"
+    
   ],
   "window":{
     "backgroundTextStyle":"light",
