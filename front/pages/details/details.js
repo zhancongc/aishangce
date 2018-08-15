@@ -2,7 +2,6 @@
 const app = getApp()
 
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -80,9 +79,13 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    that.setData({
-      test: app.globalData.cards[options.testid]
-    })
+    for (var i = 0; i < app.globalData.cards.length; i++) {
+      if (app.globalData.cards[i].id == options.testid) {
+        that.setData({
+          test: app.globalData.cards[i]
+        })
+      } 
+    }
     that.setData({
       title: that.data.test.title,
       intro: that.data.test.intro

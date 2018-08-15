@@ -2,12 +2,13 @@
 
 <view class='container'>
   <view class='title'>今日推荐</view>
-  <view class='content'>
+  <view wx:if='{{loaded}}' class='content'>
     <view class='card' wx:for='{{cards}}' wx:key='{{item.id}}' bindtap='toDetails' data-testid='{{item.id}}'>
       <view class='card-title'>{{item.title}}</view>
       <image src='{{item.image}}'></image>
       <view class='card-intro'>{{item.intro}}</view>
     </view>
   </view>
-  <view class='feedback' bindtap='toFeedback'>意见反馈</view>
+  <view wx:if='{{loaded==false}}'></view>
+  <view wx:if='{{loaded}}' class='feedback' bindtap='toFeedback'>意见反馈</view>
 </view>

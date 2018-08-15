@@ -10,27 +10,7 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    var tests = [];
-    wx.request({
-      url: 'https://wx.bestbwzs.com/index',
-      method: 'get',
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-
-      },
-      fail: function (res) {
-
-      },
-      complete: function (res) {
-        console.log(res.data);
-        tests = res.data;
-      }
-    })
-    this.globalData.cards = tests;
-    //this.globalData.cards.push(test1, test2, test3);
-
+    
     // 登录
     wx.login({
       success: res => {

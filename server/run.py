@@ -35,7 +35,7 @@ def ping():
     return 'Hello, world!'
 
 
-@app.route('/index', methods=['GET'])
+@app.route('/index')
 def index():
     db = get_db()
     num = db.test.find().count()

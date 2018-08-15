@@ -4,6 +4,7 @@ const app = getApp()
 
 Page({
   data: {
+    loaded: false,
     cards: []
   },
   //事件处理函数
@@ -23,8 +24,30 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    that.setData({
-      cards: app.globalData.cards
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.request({
+      url: 'https://wx.bestbwzs.com/index',
+      method: 'get',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+
+      },
+      fail: function (res) {
+
+      },
+      complete: function (res) {
+        console.log(res.data);
+        app.globalData.cards = res.data;
+        that.setData({
+          cards: app.globalData.cards,
+          loaded: true
+        })
+        wx.hideLoading()
+      }
     })
   },
   /**
