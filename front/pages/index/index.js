@@ -27,6 +27,9 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
+    that.setData({
+      loaded: false
+    })
     wx.request({
       url: 'https://wx.bestbwzs.com/index',
       method: 'get',
