@@ -44,7 +44,7 @@
 .card-intro {
   width: 92%;
   color: #ffffff;
-  font-size: 24rpx;
+  font-size: 28rpx;
   position: relative;
   top: -40rpx;
   margin: 0 auto;
