@@ -1,4 +1,4 @@
-import pymongo, random, requests, json
+import pymongo, random, requests, json, time, threading, sys
 from flask import Flask, jsonify, request
 from config import config
 
@@ -11,6 +11,7 @@ def create_app(config_name):
 
 
 app = create_app('development')
+
 
 
 def get_db():
@@ -30,6 +31,12 @@ def get_test(test_id):
     return tests
 
 
+def wxlogin(code):
+    url = 'https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code'
+    r = requests.get(url.format(app.config['APP_ID'], app.config['APP_SECRET'], code))
+    return r.text
+
+
 @app.route('/')
 def ping():
     return 'Hello, world!'
@@ -38,9 +45,15 @@ def ping():
 @app.route('/login', methods=['POST'])
 def login():
     code = requests.values.get('code')
-    url = 'https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code'
-    r = requests.get(url.format(app.config['APP_ID'], app.config['APP_SECRET'], code))
-    return jsonify(r.text)
+    openid = wxlogin(code).get('openid')
+    if openid is None:
+        return jsonify({'login': False})
+    db = get_db()
+    if db.test.find({'openid': openid}).count() == 0:
+        db.user.insert({'openid': openid})
+    else:
+        db.user.update({'openid': openid}, {'$set': {'last_login': time.time()}}, {'upsert': True})
+    return jsonify({'login': False, 'openid': r.text['openid']})
 
 
 @app.route('/index')
