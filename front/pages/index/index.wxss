@@ -34,7 +34,7 @@
 
 .card-title {
   position: relative;
-  top: 50rpx;
+  top: 30rpx;
   width: 90%;
   margin: 0 auto;
   font-weight: bold;
@@ -42,9 +42,9 @@
   color: #ffffff;
 }
 .card-intro {
-  width: 90%;
+  width: 92%;
   color: #ffffff;
-  font-size: 28rpx;
+  font-size: 24rpx;
   position: relative;
   top: -40rpx;
   margin: 0 auto;
