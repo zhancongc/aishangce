@@ -11,8 +11,6 @@ def create_app(config_name):
 
 
 app = create_app('development')
-appid = app.config.get('APP_ID')
-app_secret = os.environ.get('APP_SECRET')
 
 
 def out_log(message):
@@ -39,6 +37,9 @@ def get_test(test_id):
 
 
 def wxlogin(code):
+    appid = app.config.get('APP_ID')
+    with open('appsecret', 'r') as f:
+        app_secret = f.readline()
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code'
     out_log(url.format(appid, app_secret, code))
     r = requests.get(url.format(appid, app_secret, code))
