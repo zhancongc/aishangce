@@ -1,5 +1,5 @@
 import pymongo, random, requests, json, time, threading, sys
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from config import config
 
 
@@ -11,7 +11,6 @@ def create_app(config_name):
 
 
 app = create_app('development')
-
 
 
 def get_db():
@@ -40,6 +39,13 @@ def wxlogin(code):
 @app.route('/')
 def ping():
     return 'Hello, world!'
+
+
+@app.route('/image/<imagename>')
+def images(imagename):
+    image_data = open("static/images/{0}".format(imagename), "rb").read()
+    resp = Response(image_data, mimetype="image/jpeg")
+    return resp
 
 
 @app.route('/login', methods=['POST'])

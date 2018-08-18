@@ -1184,7 +1184,7 @@ db.test.insert({
             "title": "实力：★★★☆☆ 运气：★★★☆☆"
         }
     ],
-    "title": "运气和实力，哪个才是你的主打歌",
+    "title": "运气和实力，哪个是你的菜",
     "type": "next"
 });
 db.test.insert({
