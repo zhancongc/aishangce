@@ -38,6 +38,7 @@ def get_test(test_id):
 
 def wxlogin(code):
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code'
+    out_log(url.format(app.config.get('APP_ID'), app.config.get('APP_SECRET'), code))
     r = requests.get(url.format(app.config.get('APP_ID'), app.config.get('APP_SECRET'), code))
     return json.loads(r.text)
 
@@ -58,6 +59,8 @@ def images(image_name):
 def login():
     code = request.values.get('code')
     out_log('code:'+('None' if code is None else code))
+    if code is None:
+        return jsonify({'login': False})
     openid = wxlogin(code).get('openid')
     out_log('openid'+('None' if openid is None else openid))
     if openid is None:
@@ -83,12 +86,10 @@ def index():
 
 @app.route('/feedback', methods=['POST'])
 def feedback():
-    nickname = request.values.get('nickname')
     weixin = request.values.get('weixin')
     content = request.values.get('content')
-    time_stamp = request.values.get('time_stamp')
-    json_data = {'nickname': nickname, 'weixin': weixin,
-                 'content': content, 'time_stamp': time_stamp}
+    time_stamp = time.time()
+    json_data = {'weixin': weixin, 'content': content, 'time_stamp': time_stamp}
     db = get_db()
     db.feedback.insert(json_data)
     res = {'operation': True}

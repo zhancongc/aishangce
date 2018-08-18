@@ -16,11 +16,9 @@ App({
           wx.request({
             url: 'https://wx.bestbwzs.com/login',
             method: 'POST',
-            data: {
-              code: res.code
-            },
+            data: {code: res.code},
             header: {
-              'content-type': 'application/json' //默认值
+              'Content-Type': 'application/x-www-form-urlencoded'
             },
             success: function (res) {
               console.log(res.data);
