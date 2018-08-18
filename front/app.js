@@ -11,8 +11,6 @@ App({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         if(res.code) {
-          console.log('res.code');
-          console.log(res.code);
           wx.request({
             url: 'https://wx.bestbwzs.com/login',
             method: 'POST',
@@ -23,7 +21,7 @@ App({
             success: function (res) {
               console.log(res.data);
               var openid = wx.getStorageSync('openid')
-              openid = res.data
+              openid = res.data;
               wx.setStorageSync('openid', openid);
             }
           })
