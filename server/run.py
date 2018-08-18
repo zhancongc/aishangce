@@ -38,13 +38,13 @@ def get_test(test_id):
 
 def wxlogin(code):
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code'
-    r = requests.get(url.format(app.config['APP_ID'], app.config['APP_SECRET'], code))
+    r = requests.get(url.format(app.config.get('APP_ID'), app.config.get('APP_SECRET'), code))
     return json.loads(r.text)
 
 
 @app.route('/')
 def ping():
-    return 'Hello, world!'
+    return 'Hello, World!'
 
 
 @app.route('/image/<image_name>')
@@ -57,8 +57,9 @@ def images(image_name):
 @app.route('/login', methods=['POST'])
 def login():
     code = request.values.get('code')
+    out_log('code:'+('None' if code is None else code))
     openid = wxlogin(code).get('openid')
-    out_log('openid'+openid)
+    out_log('openid'+('None' if openid is None else openid))
     if openid is None:
         return jsonify({'login': False})
     db = get_db()
