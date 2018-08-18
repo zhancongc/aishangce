@@ -39,10 +39,11 @@ def get_test(test_id):
 def wxlogin(code):
     appid = app.config.get('APP_ID')
     with open('appsecret', 'r') as f:
-        app_secret = f.readline()
-    url = 'https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code'
-    out_log(url.format(appid, app_secret, code))
-    r = requests.get(url.format(appid, app_secret, code))
+        app_secret = f.readline().strip()
+    url = 'https://api.weixin.qq.com/sns/jscode2session'
+    data = {'js_code': code, 'secret': app_secret, 'grant_type': 'authorization_code',
+            'appid': appid}
+    r = requests.post(url,data=data)
     return json.loads(r.text)
 
 
@@ -61,11 +62,10 @@ def images(image_name):
 @app.route('/login', methods=['POST'])
 def login():
     code = request.values.get('code')
-    out_log('code:'+('None' if code is None else code))
     if code is None:
         return jsonify({'login': False})
     openid = wxlogin(code).get('openid')
-    out_log('openid'+('None' if openid is None else openid))
+    # out_log('openid'+('None' if openid is None else openid))
     if openid is None:
         return jsonify({'login': False})
     db = get_db()
