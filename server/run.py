@@ -70,9 +70,9 @@ def login():
         return jsonify({'login': False})
     db = get_db()
     if db.test.find({'openid': openid}).count() == 0:
-        db.user.insert({'openid': openid})
-    else:
-        db.user.update({'openid': openid}, {'$set': {'last_login': time.time()}}, {'upsert': True})
+        db.user.insert({'openid': openid, 'login_time': time.time()})
+    elif db.test.find({'openid': openid}).count() == 1:
+        db.user.update({'openid': openid}, {'$set': {'login_time': time.time()}}, {'upsert': True, 'multi': False})
     return jsonify({'login': True, 'openid': openid})
 
 
