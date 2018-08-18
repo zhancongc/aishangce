@@ -6,7 +6,6 @@ App({
     cards: []
   },
   onLaunch: function () {
-    /*
     // 登录
     wx.login({
       success: res => {
@@ -33,7 +32,6 @@ App({
         }
       }
     })
-    */
     // 获取用户信息
     wx.getSetting({
       success: res => {

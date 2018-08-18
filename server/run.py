@@ -13,6 +13,12 @@ def create_app(config_name):
 app = create_app('development')
 
 
+def out_log(message):
+    with open('debug.log', 'a') as f:
+        f.write(time.ctime() + ' ' + message)
+        f.write('\n')
+
+
 def get_db():
     client = pymongo.MongoClient(host='127.0.0.1', port=27017)
     return client.aishangce
@@ -33,7 +39,7 @@ def get_test(test_id):
 def wxlogin(code):
     url = 'https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code'
     r = requests.get(url.format(app.config['APP_ID'], app.config['APP_SECRET'], code))
-    return r.text
+    return json.loads(r.text)
 
 
 @app.route('/')
@@ -41,17 +47,18 @@ def ping():
     return 'Hello, world!'
 
 
-@app.route('/image/<imagename>')
-def images(imagename):
-    image_data = open("static/images/{0}".format(imagename), "rb").read()
+@app.route('/image/<image_name>')
+def images(image_name):
+    image_data = open("static/images/{0}".format(image_name), "rb").read()
     resp = Response(image_data, mimetype="image/jpeg")
     return resp
 
 
 @app.route('/login', methods=['POST'])
 def login():
-    code = requests.values.get('code')
+    code = request.values.get('code')
     openid = wxlogin(code).get('openid')
+    out_log('openid'+openid)
     if openid is None:
         return jsonify({'login': False})
     db = get_db()
@@ -59,7 +66,7 @@ def login():
         db.user.insert({'openid': openid})
     else:
         db.user.update({'openid': openid}, {'$set': {'last_login': time.time()}}, {'upsert': True})
-    return jsonify({'login': False, 'openid': r.text['openid']})
+    return jsonify({'login': True, 'openid': openid})
 
 
 @app.route('/index')

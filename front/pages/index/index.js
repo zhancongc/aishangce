@@ -65,6 +65,11 @@ Page({
           wx.hideLoading();
         }
       })
+    } else {
+      that.setData({
+        cards: app.globalData.cards,
+        loaded: true
+      })
     }
   },
   /**

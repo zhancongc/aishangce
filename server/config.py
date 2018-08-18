@@ -11,7 +11,7 @@ class Config(object):
     # mini program's
     APP_ID = 'wx107f16d433135388'
     # csrf key
-    APP_SECRET = os.environ.get('APP_SECRET') or '123456'
+    APP_SECRET = os.environ.get('APP_SECRET')
 
     # folder maintains uploaded file
     UPLOAD_FOLDER = basedir + '/files/upload/'
