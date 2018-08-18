@@ -1,4 +1,4 @@
-import pymongo, random, requests, json, time, threading, sys
+import pymongo, random, requests, json, time, os
 from flask import Flask, jsonify, request, Response
 from config import config
 
@@ -12,7 +12,7 @@ def create_app(config_name):
 
 app = create_app('development')
 appid = app.config.get('APP_ID')
-app_secret = app.config.get('APP_SECRET')
+app_secret = os.environ.get('APP_SECRET')
 
 
 def out_log(message):
