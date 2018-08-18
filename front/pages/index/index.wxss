@@ -7,7 +7,7 @@
 .title {
   width: 100%;
   text-align: left;
-  font-size: 48rpx;
+  font-size: 42rpx;
   font-family: sans-serif;
   font-weight: bold;
   color: black;

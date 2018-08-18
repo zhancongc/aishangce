@@ -5,9 +5,11 @@
 .container image {
   width: 100%;
 }
+
 .display {
   display: none;
 }
+
 .title {
   font-size: 48rpx;
   color: black;
@@ -58,6 +60,6 @@
 .question-options text {
   position: relative;
   left: 3%;
-  top: 15rpx;
+  top: 17rpx;
 }
 

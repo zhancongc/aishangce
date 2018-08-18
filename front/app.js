@@ -6,11 +6,7 @@ App({
     cards: []
   },
   onLaunch: function () {
-    // 展示本地存储能力
-    //var logs = wx.getStorageSync('logs') || []
-    //logs.unshift(Date.now())
-    //wx.setStorageSync('logs', logs)
-    
+    /*
     // 登录
     wx.login({
       success: res => {
@@ -26,7 +22,10 @@ App({
               'content-type': 'application/json' //默认值
             },
             success: function (res) {
-              console.log(res.data)
+              console.log(res.data);
+              var openid = wx.getStorageSync('openid')
+              openid = res.data
+              wx.setStorageSync('openid', openid);
             }
           })
         } else {
@@ -34,6 +33,7 @@ App({
         }
       }
     })
+    */
     // 获取用户信息
     wx.getSetting({
       success: res => {

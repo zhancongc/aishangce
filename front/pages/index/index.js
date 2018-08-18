@@ -24,38 +24,48 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    wx.showLoading({
-      title: '加载中',
-      mask: true,
-      success: function (res) {},
-      fail: function (res) {},
-      complete: function (res) {},
-    })
-    that.setData({
-      loaded: false
-    })
-    wx.request({
-      url: 'https://wx.bestbwzs.com/index',
-      method: 'get',
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-
-      },
-      fail: function (res) {
-
-      },
-      complete: function (res) {
-        console.log(res.data);
-        app.globalData.cards = res.data;
-        that.setData({
-          cards: app.globalData.cards,
-          loaded: true
-        })
-        wx.hideLoading()
-      }
-    })
+    if(app.globalData.cards==''){
+      wx.showLoading({
+        title: '加载中',
+        mask: true,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+      that.setData({
+        loaded: false
+      })
+      wx.request({
+        url: 'https://wx.bestbwzs.com/index',
+        method: 'get',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          app.globalData.cards = res.data;
+          that.setData({
+            cards: app.globalData.cards,
+            loaded: true
+          })
+        },
+        fail: function (res) {
+          wx.showToast({
+            title: '数据请求失败',
+            icon: 'none',
+            image: '',
+            duration: 2000,
+            mask: true,
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        },
+        complete: function (res) {
+          console.log(res.data);
+          wx.hideLoading();
+        }
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
