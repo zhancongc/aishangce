@@ -9,9 +9,9 @@ Page({
   },
   //事件处理函数
   toDetails: function (e) {
-    var testid = e.currentTarget.dataset.testid;
+    var test_id = e.currentTarget.dataset.test_id;
     wx.navigateTo({
-      url: "/pages/details/details?testid=" + testid
+      url: "/pages/details/details?test_id=" + test_id
     })
   },
   toFeedback: function (e) {

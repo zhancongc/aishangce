@@ -7,19 +7,18 @@ Page({
    */
   data: {
     test: {},
+    image: '',
     title: '',
     intro: '',
-    title_display: true,
     question_number: 0,
     question_title: '',
     question_options: [],
     question_next: [],
-    question_display: false,
     question_set: [],
+    result_id: -1
   },
   startTest : function (e) {
     this.setData({
-      title_display : false,
       share: '',
       question_set: [],
       question_number: this.data.test.question[0].id + 1,
@@ -54,13 +53,14 @@ Page({
   result: function (question_id){
     var type = parseInt(Math.abs(question_id))-1;
     this.setData({
-      title_display: true,
-      question_display: false,
       question_number: question_id,
       share: 'share',
+      result_id: type,
       title: this.data.test.result[type].title,
       intro: this.data.test.result[type].content
     })
+    console.log('测试结果是：类型');
+    console.log(this.data.result_id);
   },
   nextQuestion: function (e) {
     var question = this.data.test.question;
@@ -70,7 +70,7 @@ Page({
     if (question_id > 0){
       this.next(question_id, option_id);
     } else {
-      this.result(question_id, option_id);
+      this.result(question_id);
     }
     console.log('下一题堆栈', this.data.question_set);
   },
@@ -82,79 +82,124 @@ Page({
       this.previous(this.data.question_set[index].question_id)
     }
   },
+  testLoad: function (test_id, result_id) {
+    var that = this;
+    that.setData({
+      loaded: false
+    })
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+    console.log('正在向服务端发送数据请求');
+    console.log('测试id是：'+test_id+'，类型id是：'+result_id)
+    wx.request({
+      url: 'https://wx.bestbwzs.com/test',
+      method: 'POST',
+      data: { 'test_id': test_id },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (res.data.id == -1) {
+          wx.showToast({
+            title: '数据请求失败',
+            icon: 'none',
+            image: '',
+            duration: 2000,
+            mask: true,
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        } else {
+          console.log('从服务端获取数据成功');
+          if(result_id>=0) {
+            console.log('显示测试结果');
+            that.setData({
+              test: res.data,
+              loaded: true,
+              result_id: result_id,
+              question_number: 0,
+              image: res.data.image,
+              title: res.data.result[result_id].title,
+              intro: res.data.result[result_id].content
+            })
+          } else if (result_id==-1) {
+            console.log('显示测试简介');
+            that.setData({
+              test: res.data,
+              loaded: true,
+              image: res.data.image,
+              title: res.data.title,
+              intro: res.data.intro
+            })
+          }
+          wx.setNavigationBarTitle({
+            title: res.data.title
+          })
+        }
+      },
+      fail: function (res) {
+        console.log("fail");
+        console.log(res.data)
+      },
+      complete: function (res) {
+        console.log("complete");
+        console.log(res.data);
+        wx.hideLoading();
+      }
+    })
+  },
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    console.log('正在分享您的测试结果，类型');
+    console.log(this.data.result_id);
+    return {
+      title: this.data.test.title,
+      path: 'pages/details/details?test_id=' + this.data.test.id +'&result_id='+this.data.result_id,
+      success: (res) => { },
+      fail: (res) => { }
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log('开始加载测试');
     var that = this;
-    console.log(options.testid);
+    console.log(options.test_id);
     if(app.globalData.cards==''){
-      wx.showLoading({
-        title: '加载中',
-        mask: true,
-        success: function (res) { },
-        fail: function (res) { },
-        complete: function (res) { },
-      })
-      that.setData({
-        loaded: false
-      })
-      wx.request({
-        url: 'https://wx.bestbwzs.com/test',
-        method: 'POST',
-        data: {'test_id': options.testid},
-        header: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        success: function (res) {
-          if (res.data.id == -1) {
-            wx.showToast({
-              title: '数据请求失败',
-              icon: 'none',
-              image: '',
-              duration: 2000,
-              mask: true,
-              success: function (res) { },
-              fail: function (res) { },
-              complete: function (res) { },
-            })
-          } else {
-            that.setData({
-              cards: res.data,
-              loaded: true,
-              title: res.data.title,
-              intro: res.data.intro
-            })
-            wx.setNavigationBarTitle({
-              title: res.data.title
-            })
-          }
-        },
-        fail: function (res) {
-          console.log("fail");
-          console.log(res.data)
-        },
-        complete: function (res) {
-          console.log("complete");
-          console.log(res.data);
-          wx.hideLoading();
-        }
-      })
+      console.log('本地没有数据，尝试从服务端获取测试数据');
+      that.testLoad(options.test_id, options.result_id);
     } else {
+      console.log('本地存在测试数据，尝试从本地获取测试数据');
       for (var i = 0; i < app.globalData.cards.length; i++) {
-        if (app.globalData.cards[i].id == options.testid) {
+        if (app.globalData.cards[i].id == options.test_id) {
           that.setData({
             test: app.globalData.cards[i]
           })
         }
       }
-      that.setData({
-        title: that.data.test.title,
-        intro: that.data.test.intro
-      })
-      wx.setNavigationBarTitle({
-        title: that.data.test.title
-      })
+      if(that.data.test==''){
+        console.log('从本地获取数据失败，尝试从服务端获取测试数据');
+        that.testLoad(options.test_id, options.test_id)
+      } else {
+        console.log('获取本地数据成功，测试加载完毕');
+        that.setData({
+          image: that.data.test.image,
+          title: that.data.test.title,
+          intro: that.data.test.intro
+        })
+        wx.setNavigationBarTitle({
+          title: that.data.test.title
+        })
+      }
     }
     /*app.AppMusic.seek(60);
     app.AppMusic.src = 'http://bestbwzs.com/music/%E5%AE%97%E6%AC%A1%E9%83%8E%20-%20%E3%81%84%E3%81%A4%E3%82%82%E4%BD%95%E5%BA%A6%E3%81%A7%E3%82%82.mp3';
@@ -201,17 +246,5 @@ Page({
    */
   onReachBottom: function () {
   
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    return {
-      title: this.data.test.title,
-      path: 'pages/details/details?testid='+this.data.test.id,
-      success: (res) => {},
-      fail: (res) => {}
-    }
   }
 })

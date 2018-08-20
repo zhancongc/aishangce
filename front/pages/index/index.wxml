@@ -3,7 +3,7 @@
 <view class='container'>
   <view class='title'>推荐</view>
   <view wx:if='{{loaded}}' class='content'>
-    <view class='card' wx:for='{{cards}}' wx:key='{{item.id}}' bindtap='toDetails' data-testid='{{item.id}}'>
+    <view class='card' wx:for='{{cards}}' wx:key='{{item.id}}' bindtap='toDetails' data-test_id='{{item.id}}'>
       <view class='card-title'>{{item.title}}</view>
       <image src='{{item.image}}'></image>
       <view class='card-intro'>{{item.intro}}</view>
