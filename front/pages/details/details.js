@@ -28,7 +28,7 @@ Page({
       question_next: this.data.test.question[0].next
     })
   },
-  previous: function previous(question_id){
+  previous: function (question_id){
     var temp = this.data.question_number - 1;
     var arr = this.data.question_set.pop();
     console.log('question_set', this.data.question_set);
@@ -39,7 +39,7 @@ Page({
       question_next: this.data.test.question[question_id].next
     })
   },
-  next: function next(question_id, option_id){
+  next: function (question_id, option_id){
     var temp = this.data.question_number-1;
     var temp_set = {question_id:temp, option_id:option_id};
     var arr = this.data.question_set.push(temp_set);
@@ -51,7 +51,7 @@ Page({
       question_next: this.data.test.question[question_id].next
     })
   },
-  result: function result(question_id){
+  result: function (question_id){
     var type = parseInt(Math.abs(question_id))-1;
     this.setData({
       title_display: true,
@@ -74,7 +74,7 @@ Page({
     }
     console.log('下一题堆栈', this.data.question_set);
   },
-  previousQuestion : function (){
+  previousQuestion: function (){
     console.log('上一题堆栈', this.data.question_set);
     if(this.data.question_set!=''){
       var index = this.data.question_set.length - 1;

@@ -19,52 +19,56 @@ Page({
       url: '/pages/feedback/feedback',
     })
   },
+  pageLoad: function () {
+    var that = this;
+    that.setData({
+      loaded: false
+    })
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+    wx.request({
+      url: 'https://wx.bestbwzs.com/index',
+      method: 'get',
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        app.globalData.cards = res.data;
+        that.setData({
+          cards: app.globalData.cards,
+          loaded: true
+        })
+      },
+      fail: function (res) {
+        wx.showToast({
+          title: '数据请求失败',
+          icon: 'none',
+          image: '',
+          duration: 2000,
+          mask: true,
+          success: function (res) { },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+      },
+      complete: function (res) {
+        console.log(res.data);
+        wx.hideLoading();
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     var that = this;
     if(app.globalData.cards==''){
-      wx.showLoading({
-        title: '加载中',
-        mask: true,
-        success: function (res) { },
-        fail: function (res) { },
-        complete: function (res) { },
-      })
-      that.setData({
-        loaded: false
-      })
-      wx.request({
-        url: 'https://wx.bestbwzs.com/index',
-        method: 'get',
-        header: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        success: function (res) {
-          app.globalData.cards = res.data;
-          that.setData({
-            cards: app.globalData.cards,
-            loaded: true
-          })
-        },
-        fail: function (res) {
-          wx.showToast({
-            title: '数据请求失败',
-            icon: 'none',
-            image: '',
-            duration: 2000,
-            mask: true,
-            success: function (res) { },
-            fail: function (res) { },
-            complete: function (res) { },
-          })
-        },
-        complete: function (res) {
-          console.log(res.data);
-          wx.hideLoading();
-        }
-      })
+      that.pageLoad()
     } else {
       that.setData({
         cards: app.globalData.cards,
@@ -83,7 +87,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this;
+    if (app.globalData.cards == '') {
+      that.pageLoad()
+    } else {
+      that.setData({
+        cards: app.globalData.cards,
+        loaded: true
+      })
+    }
   },
 
   /**
@@ -104,14 +116,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.pageLoad();
+    wx.stopPullDownRefresh();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
   },
 
   /**
