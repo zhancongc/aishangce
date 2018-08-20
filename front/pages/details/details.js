@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    test: {},
+    test: null,
     image: '',
     title: '',
     intro: '',
@@ -82,7 +82,7 @@ Page({
       this.previous(this.data.question_set[index].question_id)
     }
   },
-  testLoad: function (test_id, result_id) {
+  loadTest: function (test_id, result_id) {
     var that = this;
     that.setData({
       loaded: false
@@ -133,6 +133,7 @@ Page({
             that.setData({
               test: res.data,
               loaded: true,
+              question_number: 0,
               image: res.data.image,
               title: res.data.title,
               intro: res.data.intro
@@ -176,7 +177,7 @@ Page({
     console.log(options.test_id);
     if(app.globalData.cards==''){
       console.log('本地没有数据，尝试从服务端获取测试数据');
-      that.testLoad(options.test_id, options.result_id);
+      that.loadTest(options.test_id, options.result_id);
     } else {
       console.log('本地存在测试数据，尝试从本地获取测试数据');
       for (var i = 0; i < app.globalData.cards.length; i++) {
@@ -186,11 +187,12 @@ Page({
           })
         }
       }
-      if(that.data.test==''){
+      if(that.data.test==null){
         console.log('从本地获取数据失败，尝试从服务端获取测试数据');
-        that.testLoad(options.test_id, options.test_id)
+        that.loadTest(options.test_id, options.test_id)
       } else {
         console.log('获取本地数据成功，测试加载完毕');
+        console.log(that.data.test)
         that.setData({
           image: that.data.test.image,
           title: that.data.test.title,
@@ -217,14 +219,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var test = wx.getStorageSync('test');
+    console.log(test);
+    if(this.data.test==null && test){
+      this.setData({
+        test: test
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+    wx.setStorage({
+      key: 'test',
+      data: this.data.test,
+    })
   },
 
   /**
