@@ -3,12 +3,15 @@
   "pages":[
     "pages/index/index",
     "pages/details/details",
-    "pages/feedback/feedback"
+    "pages/feedback/feedback",
+    "pages/search/search",
+    "pages/me/me"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#096064",
     "navigationBarTitleText": "爱上测",
-    "navigationBarTextStyle":"white"
+    "navigationBarTextStyle":"white",
+    "navigationStyle": "custom"
   }
 }

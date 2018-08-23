@@ -2,6 +2,7 @@
 
 App({
   globalData: {
+    statusBarHeight: 20,
     userInfo: null,
     cards: []
   },
@@ -21,7 +22,7 @@ App({
             success: function (res) {
               console.log(res.data);
               var openid = wx.getStorageSync('openid')
-              openid = res.data;
+              openid = res.data.openid;
               wx.setStorageSync('openid', openid);
             }
           })
@@ -50,6 +51,8 @@ App({
         }
       }
     })
+    this.globalData.statusBarHeight=wx.getSystemInfoSync('model').statusBarHeight
+    /*
     this.AppMusic = wx.createInnerAudioContext();
     this.AppMusic.autoplay = true;
     this.AppMusic.loop = true;
@@ -60,5 +63,6 @@ App({
       console.log(res.errMsg)
       console.log(res.errCode)
     })
+    */
   }
 })

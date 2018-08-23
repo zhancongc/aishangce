@@ -1,7 +1,11 @@
 <!--index.wxml-->
 
 <view class='container'>
-  <view class='title'>推荐</view>
+  <view class='title'>
+  <text>爱上测</text>
+  <!--image src='/images/me.png' bindtap='toMe'></image>
+  <image src='/images/search.png' bindtap='toSearch'></image-->
+  </view>
   <view wx:if='{{loaded}}' class='content'>
     <view class='card' wx:for='{{cards}}' wx:key='{{item.id}}' bindtap='toDetails' data-test_id='{{item.id}}'>
       <view class='card-title'>{{item.title}}</view>
@@ -9,6 +13,12 @@
       <view class='card-intro'>{{item.intro}}</view>
     </view>
   </view>
-  <view wx:if='{{loaded==false}}'></view>
-  <view wx:if='{{loaded}}' class='feedback' bindtap='toFeedback'>意见反馈</view>
+  <view class='blank'></view>
+  <view class='bottomBar'>
+    <view class='bottomButton' bindtap='toSearch'>
+    <image src='/images/search.png'></image>搜索一下</view>
+    <view class='bottomButton' bindtap='toMe'>
+    <image src='/images/me.png'></image>我的测试</view>
+  </view>
+  <!--view wx:if='{{loaded}}' class='feedback' bindtap='toFeedback'>意见反馈</view-->
 </view>

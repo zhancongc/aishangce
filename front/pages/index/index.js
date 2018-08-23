@@ -7,6 +7,16 @@ Page({
     loaded: false,
     cards: []
   },
+  toSearch: function(e) {
+    wx.navigateTo({
+      url: "/pages/search/search"
+    })
+  },
+  toMe: function (e) {
+    wx.navigateTo({
+      url: '/pages/me/me',
+    })
+  },
   //事件处理函数
   toDetails: function (e) {
     var test_id = e.currentTarget.dataset.test_id;
