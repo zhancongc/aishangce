@@ -16,7 +16,8 @@
   <view class='blank'></view>
   <view class='bottomBar'>
     <view class='bottomButton' bindtap='toSearch'>
-    <image src='/images/search.png'></image>搜索一下</view>
+    <image src='/images/search.png'></image>
+    搜索一下</view>
     <view class='bottomButton' bindtap='toMe'>
     <image src='/images/me.png'></image>我的测试</view>
   </view>

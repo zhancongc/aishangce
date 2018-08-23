@@ -1,2 +1,10 @@
 <!--pages/search/search.wxml-->
-<text>pages/search/search.wxml</text>
+<view class='container'>
+  <view class='title'>搜索</view>
+  <view class='search'>
+    <view class='search-image'>
+      <image src='/images/search-grey.png'></image>
+    </view>
+    <input placeholder='搜索有趣的小测试'></input>
+  </view>
+</view>

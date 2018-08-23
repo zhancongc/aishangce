@@ -92,7 +92,8 @@
 }
 
 .bottomButton image {
-  width: 28rpx;
-  height: 28rpx;
+  width: 35rpx;
+  height: 35rpx;
   margin-right: 20rpx;
+  margin-bottom: -5rpx;
 }
