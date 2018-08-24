@@ -1,18 +1,21 @@
 // pages/me/me.js
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    nickname: '用户',
+    tests: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    console.log(app.globalData.cards);
   },
 
   /**
@@ -26,7 +29,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.setData({
+      tests: app.globalData.cards
+    })
   },
 
   /**

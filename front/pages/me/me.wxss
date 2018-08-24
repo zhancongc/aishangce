@@ -1,1 +1,60 @@
 /* pages/me/me.wxss */
+
+.container {
+  width: 94%;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.title {
+  width: 100%;
+  height: 120rpx;
+}
+.title text {
+  line-height: 120rpx;
+  font-size: 48rpx;
+}
+
+.user-info {
+  width: 100%;
+  height: 100rpx;
+  border: 1rpx solid #cccccc;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.user-info image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx
+}
+.user-info text {
+  font-size: 42rpx;
+  margin-left: 40rpx;
+  line-height: 100rpx;
+}
+
+.content {
+  width: 100%;
+}
+
+.user-test {
+  width: 100%;
+  height: 150rpx;
+  border: 1rpx solid #cccccc;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.user-test text {
+  font-size: 32rpx;
+  line-height: 150rpx;
+}
+
+.user-test image {
+  width: 240rpx;
+  height: 150rpx;
+  float: right;
+}

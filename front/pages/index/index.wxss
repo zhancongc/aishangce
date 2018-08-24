@@ -45,7 +45,7 @@
   width: 90%;
   margin: 0 auto;
   font-weight: bold;
-  font-size: 48rpx;
+  font-size: 42rpx;
   color: #ffffff;
 }
 .card-intro {
@@ -80,7 +80,10 @@
   bottom: 0rpx;
   display: flex;
   flex-wrap: wrap;
-  border-top-style: 1rpx solid #096064;
+  border: 1rpx solid #cccccc;
+  border-bottom:none;
+  border-left:none;
+  border-right:none;
   background-color: #ffffff;
 }
 .bottomButton {
