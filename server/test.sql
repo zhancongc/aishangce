@@ -1716,6 +1716,18 @@ db.test.insert({
     "title": "你的爱情里最大的阻碍是什么",
     "type": "next"
 });
+db.test.update({id:0},{$set:{image:'https://bestbwzs.com/image/000-castle.jpg'}});
+db.test.update({id:1},{$set:{image:'https://bestbwzs.com/image/001-san_francisco.jpg'}});
+db.test.update({id:2},{$set:{image:'https://bestbwzs.com/image/002-cornfield.jpg'}});
+db.test.update({id:3},{$set:{image:'https://bestbwzs.com/image/003-island.jpg'}});
+db.test.update({id:4},{$set:{image:'https://bestbwzs.com/image/004-waterdrop.jpg'}});
+db.test.update({id:5},{$set:{image:'https://bestbwzs.com/image/005-barnimages.jpg'}});
+db.test.update({id:6},{$set:{image:'https://bestbwzs.com/image/006-barnimages.jpg'}});
+db.test.update({id:7},{$set:{image:'https://bestbwzs.com/image/007-barnimages.jpg'}});
+db.test.update({id:8},{$set:{image:'https://bestbwzs.com/image/008-barnimages.jpg'}});
+db.test.update({id:9},{$set:{image:'https://bestbwzs.com/image/009-barnimages.jpg'}});
+db.test.find({},{_id:0,id:1,image:1})
+
 db.test.update({id:0},{$set:{image:'https://wx.bestbwzs.com/image/000-castle.jpg'}});
 db.test.update({id:1},{$set:{image:'https://wx.bestbwzs.com/image/001-san_francisco.jpg'}});
 db.test.update({id:2},{$set:{image:'https://wx.bestbwzs.com/image/002-cornfield.jpg'}});
