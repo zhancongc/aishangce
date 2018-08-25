@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    nickname: '用户',
+    nickname: '用户名',
     tests: []
   },
 

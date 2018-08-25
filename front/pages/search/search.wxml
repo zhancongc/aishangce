@@ -7,4 +7,10 @@
     </view>
     <input placeholder='搜索有趣的小测试'></input>
   </view>
+  <view class='candicates'>
+    <view class='candicates-title'><text>推荐关键词</text></view>
+    <span class='keyword' wx:for='{{keywords}}'>
+      <image src='/images/tag-grey.png'></image><text>{{item}}</text>
+      </span>
+  </view>
 </view>

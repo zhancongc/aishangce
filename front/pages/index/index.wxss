@@ -13,8 +13,8 @@
   font-family: sans-serif;
   font-weight: bold;
   color: black;
-  margin-bottom: 0rpx;
-  margin-top: 35rpx;
+  margin-bottom: 20rpx;
+  margin-top: 30rpx;
 }
 .title text {
   height: 100%;

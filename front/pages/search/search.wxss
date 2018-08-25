@@ -49,3 +49,39 @@
   line-height: 80rpx;
   margin-left: -30rpx;
 }
+
+.candicates {
+  width: 100%;
+  margin-top: 40rpx;
+}
+
+.candicates-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  line-height: 50rpx;
+  margin-bottom: 20rpx;
+}
+
+.keyword {
+  width: auto;
+  height: 60rpx;
+  flex: wrap;
+  display: inline-flex;
+  background-color: #dedede;
+  border-radius: 30rpx;
+  margin: 10rpx 20rpx 20rpx 10rpx;
+}
+.keyword image {
+  width: 35rpx;
+  height: 35rpx;
+  margin-top: 15rpx;
+  float: left;
+  margin-right: 15rpx;
+  margin-left: 20rpx;
+}
+.keyword text {
+  font-size: 30rpx;
+  color: #515151;
+  line-height: 60rpx;
+  margin-right: 30rpx;
+}
