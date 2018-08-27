@@ -11,7 +11,15 @@ Page({
     nickName: '',
     records: []
   },
-
+  toDetails: function(e) {
+    var test_id = e.currentTarget.dataset.test_result[0];
+    var result_id = e.currentTarget.dataset.test_result[1];
+    console.log('result_id');
+    console.log(e.currentTarget.dataset.test_result[1]);
+    wx.navigateTo({
+      url: '/pages/details/details?test_id='+test_id+'&result_id='+result_id
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

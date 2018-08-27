@@ -233,7 +233,8 @@ Page({
   onLoad: function (options) {
     console.log('开始加载测试');
     var that = this;
-    console.log(options.test_id);
+    console.log('options.result_id');
+    console.log(options.result_id);
     if(app.globalData.cards==''){
       console.log('本地没有数据，尝试从服务端获取测试数据');
       that.loadTest(options.test_id, options.result_id);
@@ -248,15 +249,27 @@ Page({
       }
       if(that.data.test==null){
         console.log('从本地获取数据失败，尝试从服务端获取测试数据');
-        that.loadTest(options.test_id, options.test_id)
+        that.loadTest(options.test_id, options.result_id)
       } else {
         console.log('获取本地数据成功，测试加载完毕');
         console.log(that.data.test)
-        that.setData({
-          image: that.data.test.image,
-          title: that.data.test.title,
-          intro: that.data.test.intro
-        })
+        if(options.result_id==undefined){
+          that.setData({
+            image: that.data.test.image,
+            title: that.data.test.title,
+            intro: that.data.test.intro
+          })
+        } else {
+          that.setData({
+            test: res.data,
+            loaded: true,
+            result_id: result_id,
+            question_number: 0,
+            image: res.data.image,
+            title: res.data.result[result_id].title,
+            intro: res.data.result[result_id].content
+          })
+        }
         wx.setNavigationBarTitle({
           title: that.data.test.title
         })

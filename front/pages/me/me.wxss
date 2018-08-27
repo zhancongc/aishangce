@@ -51,15 +51,22 @@
   border-top: none;
 }
 
-.user-test text {
+.test-title {
   font-size: 32rpx;
-  line-height: 150rpx;
+  line-height: 100rpx;
+  display: flex;
+}
+.test-date {
+  font-size: 22rpx;
+  color: #515151;
+  line-height: 50rpx;
+  display: flex;
 }
 
 .user-test image {
   width: 200rpx;
   height: 120rpx;
   float: right;
-  margin-top: 15rpx;
+  margin-top: -135rpx;
   border-radius: 8rpx;
 }

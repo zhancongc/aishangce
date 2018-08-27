@@ -8,8 +8,9 @@
     <text>{{nickName?nickName:"用户名"}}</text>
   </view>
   <view class='content'>
-    <view class='user-test' wx:for='{{records}}' wx:key='{{item.id}}'>
-      <text>{{item.title}}</text>
+    <view class='user-test' wx:for='{{records}}' wx:key='{{item.id}}' bindtap='toDetails' data-test_result='{{[item.test_id, item.result_id]}}'>
+      <text class='test-title'>{{item.title}}</text>
+      <text class='test-date'>{{item.timestamp}}</text>
       <image src='{{item.image}}'></image>
     </view>
   </view>

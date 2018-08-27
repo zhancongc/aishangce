@@ -133,6 +133,7 @@ def get_user_test():
     for arr in array:
         temp_test = get_test_by_id(arr['test_id'])
         arr['title'], arr['image'] = temp_test['title'], temp_test['image']
+        arr['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(arr['timestamp']))
     return jsonify(array)
 
 
