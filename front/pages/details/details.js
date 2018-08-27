@@ -53,6 +53,8 @@ Page({
   result: function (question_id){
     var that = this;
     var result_id = parseInt(Math.abs(question_id))-1;
+    console.log("question_id");
+    console.log(question_id);
     wx.showLoading({
       title: '正在获取您的测试结果',
     })
@@ -60,6 +62,7 @@ Page({
       url: 'https://wx.bestbwzs.com/user',
       method: 'POST',
       data: {
+        'openid': wx.getStorageSync("openid"),
         'test_id': that.data.test.id,
         'result_id': result_id
         },
@@ -93,9 +96,9 @@ Page({
             share: 'share',
             result_id: result_id,
             question_number: question_id,
-            image: res.data.image,
-            title: res.data.result[result_id].title,
-            intro: res.data.result[result_id].content
+            image: that.data.test.image,
+            title: that.data.test.result[result_id].title,
+            intro: that.data.test.result[result_id].content
           })
         }
       },

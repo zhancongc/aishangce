@@ -39,7 +39,7 @@ def get_test_by_id(test_id):
 def get_test_by_title(keyword):
     db = get_db()
     try:
-        tests = db.test.find({'title': {'$regex': keyword, '$options': 'i'}}, {'_id': 0})
+        tests = db.test.find_one({'title': {'$regex': keyword, '$options': 'i'}}, {'_id': 0})
     except Exception as e:
         print(e)
         return None
@@ -79,13 +79,11 @@ def login():
     if openid is None:
         return jsonify({'login': False})
     db = get_db()
-    if db.user.find({'openid': openid}).count() == 0:
+    if db.user.find({'openid': openid}).count() > 1:
+        db.user.remove({'openid': openid}, multi=True)
         db.user.insert({'openid': openid, 'login_time': time.time()})
-    elif db.user.find({'openid': openid}).count() == 1:
-        db.user.update({'openid': openid}, {'$set': {'login_time': time.time()}})
     else:
-        db.user.remove({'openid': openid}, {'multi': True})
-        db.user.insert({'openid': openid, 'login_time': time.time()})
+        db.user.update({'openid': openid}, {'$set': {'login_time': time.time()}}, upsert=True)
     return jsonify({'login': True, 'openid': openid})
 
 
@@ -93,7 +91,7 @@ def login():
 def index():
     db = get_db()
     num = db.test.find().count()
-    arr = random.sample([i for i in range(num)], 3)
+    arr = random.sample([i for i in range(num)], 4)
     array = []
     for a in arr:
         array.append(get_test_by_id(a))
@@ -110,12 +108,11 @@ def record_user_test():
         return jsonify({"status": 0, "message": "data is broken"})
     db = get_db()
     try:
-        json_data = {"result_id": result_id, "timestamp": timestamp}
+        json_data = {"result_id": int(result_id), "timestamp": timestamp}
         print(json_data)
-        db.user_test.update({"openid": open_id, "test_id": test_id}, {"$set": json_data}, upsert=True)
+        db.user_test.update({"openid": open_id, "test_id": int(test_id)}, {"$set": json_data}, upsert=True)
     except Exception as e:
         return jsonify({"status": 0, "message": e})
-
     return jsonify({"status": 1, "message": "success"})
 
 
@@ -133,6 +130,9 @@ def get_user_test():
     if cur.count() == 0:
         return jsonify({"status": 2, "message": "cannot find data"})
     array = [c for c in cur]
+    for arr in array:
+        temp_test = get_test_by_id(arr['test_id'])
+        arr['title'], arr['image'] = temp_test['title'], temp_test['image']
     return jsonify(array)
 
 
@@ -155,7 +155,7 @@ def test_data():
         return jsonify({'id': -1})
     elif test_id is not None:
         print('test_id: ', test_id)
-        tests = get_test_by_id(test_id)
+        tests = get_test_by_id(int(test_id))
         return jsonify(tests)
     else:
         print('keyword: ', keyword)
