@@ -1,4 +1,4 @@
-import pymongo, random, requests, json, time, os
+import pymongo, random, requests, json, time
 from flask import Flask, jsonify, request, Response
 from config import config
 
@@ -24,7 +24,7 @@ def get_db():
     return client.aishangce
 
 
-def get_test(test_id):
+def get_test_by_id(test_id):
     db = get_db()
     try:
         tests = db.test.find_one({'id': int(test_id)}, {'_id': 0})
@@ -33,6 +33,16 @@ def get_test(test_id):
     except Exception as e:
         print(e)
         return {'id': -1}
+    return tests
+
+
+def get_test_by_title(keyword):
+    db = get_db()
+    try:
+        tests = db.test.find({'title': {'$regex': keyword, '$options': 'i'}}, {'_id': 0})
+    except Exception as e:
+        print(e)
+        return None
     return tests
 
 
@@ -86,7 +96,7 @@ def index():
     arr = random.sample([i for i in range(num)], 3)
     array = []
     for a in arr:
-        array.append(get_test(a))
+        array.append(get_test_by_id(a))
     return jsonify(array)
 
 
@@ -104,12 +114,21 @@ def feedback():
 
 @app.route('/test', methods=['POST'])
 def test_data():
-    test_id = request.values.get('test_id')
-    if test_id is None:
+    test_id, keyword = request.values.get('test_id'), request.values.get('keyword')
+    if test_id is None and keyword is None:
         return jsonify({'id': -1})
-    print('test_id', test_id)
-    tests = get_test(test_id)
-    return jsonify(tests)
+    elif test_id is not None:
+        print('test_id: ', test_id)
+        tests = get_test_by_id(test_id)
+        return jsonify(tests)
+    else:
+        print('keyword: ', keyword)
+        cur = get_test_by_title(keyword)
+        if cur.count() == 0:
+            return jsonify({"id": -1})
+        array = [c for c in cur]
+        print(len(array))
+        return jsonify(array)
 
 
 if __name__ == '__main__':
