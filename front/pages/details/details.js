@@ -261,13 +261,12 @@ Page({
           })
         } else {
           that.setData({
-            test: res.data,
             loaded: true,
-            result_id: result_id,
+            result_id: options.result_id,
             question_number: 0,
-            image: res.data.image,
-            title: res.data.result[result_id].title,
-            intro: res.data.result[result_id].content
+            image: that.data.test.image,
+            title: that.data.test.result[options.result_id].title,
+            intro: that.data.test.result[options.result_id].content
           })
         }
         wx.setNavigationBarTitle({
@@ -291,13 +290,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var test = wx.getStorageSync('test');
-    console.log(test);
-    if(this.data.test==null && test){
-      this.setData({
-        test: test
-      })
-    }
+
   },
 
   /**

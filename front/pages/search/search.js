@@ -1,4 +1,6 @@
 // pages/search/search.js
+const app = getApp()
+
 Page({
 
   /**
@@ -39,6 +41,15 @@ Page({
             searched: 1,
             cards: res.data
           })
+          var arr = [];
+          for(var i=0; i<app.globalData.cards.length; i++){
+            arr.push(app.globalData.cards[i].id)
+          }
+          for(var i=0; i<res.data.length; i++){
+            if(!(res.data[i].id in arr)){
+              app.globalData.cards.push(res.data[i])
+            }
+          }
         }
       },
       fail: function (res) { },
