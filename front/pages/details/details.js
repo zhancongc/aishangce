@@ -51,14 +51,72 @@ Page({
     })
   },
   result: function (question_id){
-    var type = parseInt(Math.abs(question_id))-1;
-    this.setData({
+    var that = this;
+    var result_id = parseInt(Math.abs(question_id))-1;
+    wx.showLoading({
+      title: '正在获取您的测试结果',
+    })
+    wx.request({
+      url: 'https://wx.bestbwzs.com/user',
+      method: 'POST',
+      data: {
+        'test_id': that.data.test.id,
+        'result_id': result_id
+        },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        if (res.data.status == 0) {
+          wx.showToast({
+            title: '获取测试结果失败',
+            icon: 'none',
+            image: '',
+            duration: 2000,
+            mask: true,
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        } else if (res.data.status == 1) {
+          wx.showToast({
+            title: '获取测试结果成功',
+            icon: 'none',
+            image: '',
+            duration: 2000,
+            mask: true,
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+          that.setData({
+            share: 'share',
+            result_id: result_id,
+            question_number: question_id,
+            image: res.data.image,
+            title: res.data.result[result_id].title,
+            intro: res.data.result[result_id].content
+          })
+        }
+      },
+      fail: function (res) {
+        console.log("fail");
+        console.log(res.data)
+      },
+      complete: function (res) {
+        console.log("complete");
+        console.log(res.data);
+        wx.hideLoading();
+      }
+    })
+    that.setData({
       question_number: question_id,
       share: 'share',
-      result_id: type,
-      title: this.data.test.result[type].title,
-      intro: this.data.test.result[type].content
+      result_id: result_id,
+      title: that.data.test.result[result_id].title,
+      intro: that.data.test.result[result_id].content
     })
+    wx.hideLoading();
     console.log('测试结果是：类型');
     console.log(this.data.result_id);
   },

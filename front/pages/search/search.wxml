@@ -1,16 +1,27 @@
 <!--pages/search/search.wxml-->
 <view class='container'>
   <view class='title'>搜索</view>
-  <view class='search'>
-    <view class='search-image'>
-      <image src='/images/search-grey.png'></image>
+  <form bindsubmit='search'>
+    <view class='search'>
+      <view class='search-image'>
+        <image src='/images/search-grey.png'></image>
+      </view>
+      <input placeholder='搜索有趣的小测试' name='keyword' bindconfirm='search' focus='true'></input>
     </view>
-    <input placeholder='搜索有趣的小测试'></input>
-  </view>
-  <view class='candicates'>
+  </form>
+  <view wx:if='{{searched==0}}' class='candicates'>
     <view class='candicates-title'><text>推荐关键词</text></view>
-    <span class='keyword' wx:for='{{keywords}}'>
+    <span class='keyword' wx:for='{{keywords}}' data-keyword='{{item}}' bindtap='quickSearch'>
       <image src='/images/tag-grey.png'></image><text>{{item}}</text>
       </span>
+  </view>
+  <view wx:if='{{searched}}' class='content'>
+    <view class='candicates-title'>搜索结果</view>
+    <view class='card' wx:if='{{searched==1}}' wx:for='{{cards}}' wx:key='{{item.id}}' bindtap='toDetails' data-test_id='{{item.id}}'>
+      <view class='card-title'>{{item.title}}</view>
+      <image src='{{item.image}}'></image>
+      <view class='card-intro'>{{item.intro}}</view>
+    </view>
+    <text wx:if='{{searched==2}}'>暂无结果</text>
   </view>
 </view>

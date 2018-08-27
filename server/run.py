@@ -79,9 +79,9 @@ def login():
     if openid is None:
         return jsonify({'login': False})
     db = get_db()
-    if db.test.find({'openid': openid}).count() == 0:
+    if db.user.find({'openid': openid}).count() == 0:
         db.user.insert({'openid': openid, 'login_time': time.time()})
-    elif db.test.find({'openid': openid}).count() == 1:
+    elif db.user.find({'openid': openid}).count() == 1:
         db.user.update({'openid': openid}, {'$set': {'login_time': time.time()}})
     else:
         db.user.remove({'openid': openid}, {'multi': True})
@@ -97,6 +97,42 @@ def index():
     array = []
     for a in arr:
         array.append(get_test_by_id(a))
+    return jsonify(array)
+
+
+@app.route('/user', methods=['POST'])
+def record_user_test():
+    open_id = request.values.get("openid")
+    test_id = request.values.get('test_id')
+    result_id = request.values.get('result_id')
+    timestamp = time.time()
+    if open_id is None or test_id is None or result_id is None:
+        return jsonify({"status": 0, "message": "data is broken"})
+    db = get_db()
+    try:
+        json_data = {"result_id": result_id, "timestamp": timestamp}
+        print(json_data)
+        db.user_test.update({"openid": open_id, "test_id": test_id}, {"$set": json_data}, upsert=True)
+    except Exception as e:
+        return jsonify({"status": 0, "message": e})
+
+    return jsonify({"status": 1, "message": "success"})
+
+
+@app.route('/user/test', methods=['POST'])
+def get_user_test():
+    open_id = request.values.get("openid")
+    print("open_id: ", open_id)
+    if open_id is None:
+        return jsonify({"status": 0, "message": "data is broken"})
+    db = get_db()
+    try:
+        cur = db.user_test.find({"openid": open_id}, {"_id": 0})
+    except Exception as e:
+        return jsonify({"status": 0, "message": e})
+    if cur.count() == 0:
+        return jsonify({"status": 2, "message": "cannot find data"})
+    array = [c for c in cur]
     return jsonify(array)
 
 

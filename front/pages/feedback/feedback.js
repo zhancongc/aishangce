@@ -6,7 +6,7 @@ Page({
    */
   data: {
   },
-  feedback : function (e) {
+  feedback: function (e) {
     var weixin = e.detail.value.weixin;
     var content = e.detail.value.content;
     if (content == undefined || content == ''){
