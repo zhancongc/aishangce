@@ -4,11 +4,11 @@
     <text>我的测试</text>
   </view>
   <view class='user-info'>
-    <image src='/images/me.png'></image>
-    <text>{{nickname}}</text>
+    <image src='{{avatar?avatar:"/images/me.png"}}'></image>
+    <text>{{nickName?nickName:"用户名"}}</text>
   </view>
   <view class='content'>
-    <view class='user-test' wx:for='{{tests}}' wx:key='{{item.id}}'>
+    <view class='user-test' wx:for='{{records}}' wx:key='{{item.id}}'>
       <text>{{item.title}}</text>
       <image src='{{item.image}}'></image>
     </view>

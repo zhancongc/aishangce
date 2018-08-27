@@ -7,15 +7,52 @@ Page({
    * 页面的初始数据
    */
   data: {
-    nickname: '用户名',
-    tests: []
+    avatar: '',
+    nickName: '',
+    records: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(app.globalData.cards);
+    var that = this;
+    wx.showLoading({
+      title: '加载您的测试数据',
+    })
+    wx.request({
+      url: 'https://wx.bestbwzs.com/user/test',
+      data: {"openid": wx.getStorageSync("openid")},
+      method : "POST",
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      success: function(res){
+        if(res.data.length==undefined){
+          console.log(res.data.message);
+          wx.showToast({
+            title: '加载失败',
+            icon: 'none',
+            image: '',
+            duration: 2000,
+            mask: true,
+            success: function (res) { },
+            fail: function (res) { },
+            complete: function (res) { },
+          })
+        } else {
+          that.setData({
+            records: res.data,
+            avatar: app.globalData.userInfo.avatarUrl,
+            nickName: app.globalData.userInfo.nickName
+          })
+        }
+      },
+      fail: function(res){},
+      complete: function(res){
+        wx.hideLoading();
+      }
+    })
   },
 
   /**
@@ -29,9 +66,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      tests: app.globalData.cards
-    })
   },
 
   /**

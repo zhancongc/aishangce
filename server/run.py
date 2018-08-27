@@ -39,7 +39,7 @@ def get_test_by_id(test_id):
 def get_test_by_title(keyword):
     db = get_db()
     try:
-        tests = db.test.find_one({'title': {'$regex': keyword, '$options': 'i'}}, {'_id': 0})
+        tests = db.test.find({'title': {'$regex': keyword, '$options': 'i'}}, {'_id': 0})
     except Exception as e:
         print(e)
         return None

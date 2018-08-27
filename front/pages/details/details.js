@@ -53,8 +53,6 @@ Page({
   result: function (question_id){
     var that = this;
     var result_id = parseInt(Math.abs(question_id))-1;
-    console.log("question_id");
-    console.log(question_id);
     wx.showLoading({
       title: '正在获取您的测试结果',
     })
