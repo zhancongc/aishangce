@@ -63,7 +63,7 @@ Page({
     if (keyword == undefined || keyword == '') {
       wx.showToast({
         icon: 'none',
-        title: '请输出搜索内容',
+        title: '请输入搜索内容',
         duration: 2000
       })
     } else {

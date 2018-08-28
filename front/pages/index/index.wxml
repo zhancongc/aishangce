@@ -18,8 +18,11 @@
     <view class='bottomButton' bindtap='toSearch'>
     <image src='/images/search.png'></image>
     搜索一下</view>
-    <view class='bottomButton' bindtap='toMe'>
-    <image src='/images/me.png'></image>我的测试</view>
+    <view class='bottomButton'>
+    <button class='user-info' open-type='getUserInfo' bindgetuserinfo='toMe' style='color: #096064'>
+    <image src='/images/me.png'></image>
+    我的测试</button>
+    </view>
   </view>
   <!--view wx:if='{{loaded}}' class='feedback' bindtap='toFeedback'>意见反馈</view-->
 </view>

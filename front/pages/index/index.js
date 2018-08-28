@@ -13,9 +13,14 @@ Page({
     })
   },
   toMe: function (e) {
-    wx.navigateTo({
-      url: '/pages/me/me',
-    })
+    console.log(e.detail.userInfo);
+    app.globalData.userInfo = e.detail.userInfo;
+    var callback = function(e){
+      wx.navigateTo({
+        url: '/pages/me/me',
+      })
+    }
+    callback();
   },
   //事件处理函数
   toDetails: function (e) {

@@ -100,3 +100,13 @@
   margin-right: 20rpx;
   margin-bottom: -5rpx;
 }
+
+.user-info {
+  width: auto;
+  border: none;
+  margin-top: 0rpx;
+  background: none;
+}
+.user-info::after{
+  border: none;
+}

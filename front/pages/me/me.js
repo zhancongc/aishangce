@@ -25,42 +25,51 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    wx.showLoading({
-      title: '加载您的测试数据',
-    })
-    wx.request({
-      url: 'https://wx.bestbwzs.com/user/test',
-      data: {"openid": wx.getStorageSync("openid")},
-      method : "POST",
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      success: function(res){
-        if(res.data.length==undefined){
-          console.log(res.data.message);
-          wx.showToast({
-            title: '加载失败',
-            icon: 'none',
-            image: '',
-            duration: 2000,
-            mask: true,
-            success: function (res) { },
-            fail: function (res) { },
-            complete: function (res) { },
-          })
-        } else {
-          that.setData({
-            records: res.data,
-            avatar: app.globalData.userInfo.avatarUrl,
-            nickName: app.globalData.userInfo.nickName
-          })
+    if(app.globalData.userInfo){
+      wx.showLoading({
+        title: '加载您的测试数据',
+      })
+      wx.request({
+        url: 'https://wx.bestbwzs.com/user/test',
+        data: { "openid": wx.getStorageSync("openid") },
+        method: "POST",
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          if (res.data.length == undefined) {
+            console.log(res.data.message);
+            wx.showToast({
+              title: '加载失败',
+              icon: 'none',
+              image: '',
+              duration: 2000,
+              mask: true,
+              success: function (res) { },
+              fail: function (res) { },
+              complete: function (res) { },
+            })
+          } else {
+            that.setData({
+              records: res.data,
+              avatar: app.globalData.userInfo.avatarUrl,
+              nickName: app.globalData.userInfo.nickName
+            })
+          }
+        },
+        fail: function (res) { },
+        complete: function (res) {
+          wx.hideLoading();
         }
-      },
-      fail: function(res){},
-      complete: function(res){
-        wx.hideLoading();
-      }
-    })
+      })
+    }
+    else{
+      that.setData({
+        avatar: '/images/me.png',
+        nickName: '用户名'
+      })
+    }
+
   },
 
   /**

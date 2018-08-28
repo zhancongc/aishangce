@@ -15,9 +15,10 @@ Page({
     question_options: [],
     question_next: [],
     question_set: [],
-    result_id: -1
+    result_id: undefined
   },
   startTest : function (e) {
+    console.log('用户点击开始测试后');
     this.setData({
       share: '',
       question_set: [],
@@ -187,7 +188,7 @@ Page({
               title: res.data.result[result_id].title,
               intro: res.data.result[result_id].content
             })
-          } else if (result_id==-1) {
+          } else if (result_id==undefined) {
             console.log('显示测试简介');
             that.setData({
               test: res.data,
