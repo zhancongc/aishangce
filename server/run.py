@@ -1,4 +1,9 @@
-import pymongo, random, requests, json, time
+import pymongo
+import random
+import requests
+import json
+import time
+import hashlib
 from flask import Flask, jsonify, request, Response
 from config import config
 
@@ -11,6 +16,9 @@ def create_app(config_name):
 
 
 app = create_app('development')
+appid = app.config.get('APP_ID')
+with open('appsecret', 'r') as f:
+    app_secret = f.readline().strip()
 
 
 def out_log(message):
@@ -46,10 +54,13 @@ def get_test_by_title(keyword):
     return tests
 
 
+def get_access_token():
+    url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}'
+    res = requests.get(url.format(appid, app_secret))
+    return res['access_token']
+
 def wxlogin(code):
-    appid = app.config.get('APP_ID')
-    with open('appsecret', 'r') as f:
-        app_secret = f.readline().strip()
+    # appsecret = os.environ.get('APP_SECRET')
     url = 'https://api.weixin.qq.com/sns/jscode2session'
     data = {'js_code': code, 'secret': app_secret, 'grant_type': 'authorization_code',
             'appid': appid}
@@ -167,6 +178,22 @@ def test_data():
         print(len(array))
         return jsonify(array)
 
+
+@app.route('/services', methods=['GET'])
+def services():
+    token = 'aishangce_wx.bestbwzs.com'
+    EncodingAESKey = 'NJc11dnNoYUr24fCUxInkPoOw4WPsSKh8gGcB3RSBao'
+    signature = request.values.get('signature ')
+    timestamp = request.values.get('timestamp')
+    nonce = request.values.get('nonce')
+    echostr = request.values.get('echostr')
+    temp_array = [token, timestamp, nonce]
+    temp_array.sort()
+    sha.update("".join(temp_array).encode())
+    if sha.hexdigest() == signature:
+        return echostr
+    else:
+        return None
 
 if __name__ == '__main__':
     app.run()
