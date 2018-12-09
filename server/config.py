@@ -12,7 +12,7 @@ class Config(object):
     APP_ID = 'wx107f16d433135388'
 
     # folder maintains uploaded file
-    UPLOAD_FOLDER = basedir + '/files/upload/'
+    UPLOAD_FOLDER = basedir + '/app/static/compositions/'
     # folder maintains out file
     OUT_FOLDER = basedir + '/files/out/'
     # max size of uploaded file
@@ -22,6 +22,11 @@ class Config(object):
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     # track modifications is suggested opening
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    # time.strftime() format
+    STRFTIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+    # picture_allowed_extensions
+    PICTURE_ALLOWED_EXTENSIONS = {'png', 'PNG', 'jpg', 'JPG', 'gif', 'GIF', 'jpeg', 'JPEG'}
+
 
     @staticmethod
     def init_app(app):

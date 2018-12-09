@@ -3,7 +3,6 @@ import random
 import requests
 import json
 import time
-import hashlib
 from flask import Flask, jsonify, request, Response
 from config import config
 
@@ -19,6 +18,10 @@ app = create_app('development')
 appid = app.config.get('APP_ID')
 with open('appsecret', 'r') as f:
     app_secret = f.readline().strip()
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1] in config['development'].PICTURE_ALLOWED_EXTENSIONS
 
 
 def out_log(message):
@@ -179,21 +182,29 @@ def test_data():
         return jsonify(array)
 
 
-@app.route('/services', methods=['GET'])
-def services():
-    token = 'aishangce_wx.bestbwzs.com'
-    EncodingAESKey = 'NJc11dnNoYUr24fCUxInkPoOw4WPsSKh8gGcB3RSBao'
-    signature = request.values.get('signature ')
-    timestamp = request.values.get('timestamp')
-    nonce = request.values.get('nonce')
-    echostr = request.values.get('echostr')
-    temp_array = [token, timestamp, nonce]
-    temp_array.sort()
-    sha.update("".join(temp_array).encode())
-    if sha.hexdigest() == signature:
-        return echostr
+@app.route('/upload', methods=['POST'])
+def upload():
+    res = dict()
+    img = request.files.get('composition')
+    if allowed_file(img.filename):
+        image = dict()
+        image.update({
+            'name': str(int(time.time()))+'_' + img.filename,
+            'date': time.strftime(config['development'].STRFTIME_FORMAT, time.localtime())
+        })
+        image.update({'file_path': config['development'].UPLOAD_FOLDER + image['name']})
+        img.save(image['file_path'])
+        res.update({
+            'state': 1,
+            'msg': 'upload success',
+            'data': image
+        })
     else:
-        return None
+        res.update({
+            'state': 0,
+            'msg': 'file format is not supported'
+        })
+    return jsonify(res)
 
 if __name__ == '__main__':
     app.run()
