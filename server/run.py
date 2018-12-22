@@ -61,7 +61,9 @@ def get_test_by_title(keyword):
 def get_access_token():
     url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}'
     res = requests.get(url.format(appid, app_secret))
-    return res['access_token']
+    access_token = json.loads(res.text).get('access_token')
+    return access_token if access_token else None
+
 
 def wxlogin(code):
     # appsecret = os.environ.get('APP_SECRET')
@@ -270,9 +272,12 @@ def online_service():
         })
         print(response_data)
         access_token = get_access_token()
-        response_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=' + access_token
-        requests.post(url=response_url, data=response_data)
-        return 'good luck'
+        if access_token:
+            response_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=' + access_token
+            requests.post(url=response_url, data=response_data)
+            return 'good luck'
+        else:
+            return 'bad news'
 
 
 if __name__ == '__main__':
