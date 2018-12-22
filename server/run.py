@@ -275,7 +275,7 @@ def online_service():
         access_token = get_access_token()
         if access_token:
             response_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=' + access_token
-            res = requests.post(url=response_url, data=response_data)
+            res = requests.post(url=response_url, data=json.dumps(response_data))
             print(res.text)
             return 'good luck'
         else:
