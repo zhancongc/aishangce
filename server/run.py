@@ -235,7 +235,7 @@ def online_service():
         timestamp = request.values.get("timestamp")
         nonce = request.values.get("nonce")
         echostr = request.values.get("echostr")
-        print("signature, timestamp, nonce, echostr", signature, timestamp, nonce, echostr)
+        print(request.values)
         if signature is None or timestamp is None or nonce is None or echostr is None:
             return 'bad guys'
         token = 'wx.bestbwzs.com'
@@ -253,9 +253,17 @@ def online_service():
         else:
             return 'bad guys'
     if request.method == 'POST':
-        temp = request.values
-        print(temp)
-        return 'good luck'
+        print("value", request.values)
+        message = json.loads(request.get_data(as_text=True))
+        print("message", message)
+        open_id = message['FromUserName']
+        data = dict()
+        data.update({
+            "touser": open_id,
+            "msgtype": "text",
+            "text": {"content": "你好，有什么需要帮助的吗？"}
+        })
+        return jsonify(data)
 
 
 if __name__ == '__main__':
