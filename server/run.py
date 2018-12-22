@@ -230,30 +230,31 @@ def upload():
 
 @app.route('/online/service', methods=['GET', 'POST'])
 def online_service():
+    signature = request.values.get("signature")
+    timestamp = request.values.get("timestamp")
+    nonce = request.values.get("nonce")
+    print(request.values)
+    if signature is None or timestamp is None or nonce is None or echostr is None:
+        return 'bad guys'
+    token = 'wx.bestbwzs.com'
+    params = list()
+    params.append(token)
+    params.append(timestamp)
+    params.append(nonce)
+    params.sort()
+    out = ''
+    for i in params:
+        out += i
+    sign = hashlib.sha1(out.encode()).hexdigest()
+    if sign != signature:
+        return 'bad guys'
     if request.method == 'GET':
-        signature = request.values.get("signature")
-        timestamp = request.values.get("timestamp")
-        nonce = request.values.get("nonce")
         echostr = request.values.get("echostr")
-        print(request.values)
-        if signature is None or timestamp is None or nonce is None or echostr is None:
-            return 'bad guys'
-        token = 'wx.bestbwzs.com'
-        params = list()
-        params.append(token)
-        params.append(timestamp)
-        params.append(nonce)
-        params.sort()
-        out = ''
-        for i in params:
-            out += i
-        sign = hashlib.sha1(out.encode()).hexdigest()
-        if sign == signature:
+        if echostr is None:
             return echostr
         else:
             return 'bad guys'
     if request.method == 'POST':
-        print("value", request.values)
         message = json.loads(request.get_data(as_text=True))
         print("message", message)
         open_id = message['FromUserName']
@@ -267,6 +268,7 @@ def online_service():
             "msgtype": "text",
             "text": {"content": msg}
         })
+        print(data)
         return jsonify(data)
 
 
