@@ -27,7 +27,6 @@ class Config(object):
     # picture_allowed_extensions
     PICTURE_ALLOWED_EXTENSIONS = {'png', 'PNG', 'jpg', 'JPG', 'gif', 'GIF', 'jpeg', 'JPEG'}
 
-
     @staticmethod
     def init_app(app):
         pass
