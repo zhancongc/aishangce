@@ -237,7 +237,7 @@ def online_service():
         echostr = request.values.get("echostr")
         print("signature, timestamp, nonce, echostr", signature, timestamp, nonce, echostr)
         if signature is None or timestamp is None or nonce is None or echostr is None:
-            return 0
+            return 'bad guys'
         token = 'wx.bestbwzs.com'
         params = list()
         params.append(token)
@@ -251,11 +251,11 @@ def online_service():
         if sign == signature:
             return echostr
         else:
-            return 0
+            return 'bad guys'
     if request.method == 'POST':
         temp = request.values
         print(temp)
-        return None
+        return 'good luck'
 
 
 if __name__ == '__main__':
