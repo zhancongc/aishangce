@@ -62,6 +62,7 @@ def get_access_token():
     url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}'
     res = requests.get(url.format(appid, app_secret))
     access_token = json.loads(res.text).get('access_token')
+    print(access_token)
     return access_token if access_token else None
 
 
@@ -274,7 +275,8 @@ def online_service():
         access_token = get_access_token()
         if access_token:
             response_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=' + access_token
-            requests.post(url=response_url, data=response_data)
+            res = requests.post(url=response_url, data=response_data)
+            print(res.text)
             return 'good luck'
         else:
             return 'bad news'
