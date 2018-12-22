@@ -261,21 +261,26 @@ def online_service():
         message = json.loads(request.get_data(as_text=True))
         print("message", message)
         open_id = message['FromUserName']
-        if message['MsgType'] == 'text' and message['Content'] == '1':
-            msg = 'Bugaboo官方账号'
-        else:
-            msg = '请关注公众号：Bugaboo官方账号'
         response_data = dict()
-        response_data.update({
-            "touser": open_id,
-            "msgtype": "text",
-            "text": {"content": msg}
-        })
+        if message['MsgType'] == 'text' and message['Content'] == '1':
+            response_data.update({
+                "touser": open_id,
+                "msgtype": "image",
+                "image": {"media_id": "wkCo44zHGtp1H7p3kN4JhEQvRUFhZ1FYPoctcgGNINtgF8kC_ebF1-bFVVpAuGRx"}
+            })
+        else:
+            response_data.update({
+                "touser": open_id,
+                "msgtype": "text",
+                "text": {
+                    "content": "回复1，关注bugaboo官方公众号之后，可以到小程序【bugaboo助力】中抽奖"
+                }
+            })
         print(response_data)
         access_token = get_access_token()
         if access_token:
             response_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=' + access_token
-            res = requests.post(url=response_url, data=json.dumps(response_data))
+            res = requests.post(url=response_url, data=json.dumps(response_data, ensure_ascii=False))
             print(res.text)
             return 'good luck'
         else:
