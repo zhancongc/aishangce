@@ -235,6 +235,8 @@ def online_service():
         timestamp = request.values.get("timestamp")
         nonce = request.values.get("nonce")
         echostr = request.values.get("echostr")
+        if signature is None or timestamp is None or nonce is None or echostr is None:
+            return 0
         token = 'wx.bestbwzs.com'
         params = [token, timestamp, nonce]
         params.sort()
