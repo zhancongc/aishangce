@@ -262,14 +262,17 @@ def online_service():
             msg = 'Bugaboo官方账号'
         else:
             msg = '请关注公众号：Bugaboo官方账号'
-        data = dict()
-        data.update({
+        response_data = dict()
+        response_data.update({
             "touser": open_id,
             "msgtype": "text",
             "text": {"content": msg}
         })
-        print(data)
-        return jsonify(data)
+        print(response_data)
+        access_token = get_access_token()
+        response_url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=' + access_token
+        requests.post(url=response_url, data=response_data)
+        return 'good luck'
 
 
 if __name__ == '__main__':
