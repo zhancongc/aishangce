@@ -257,11 +257,15 @@ def online_service():
         message = json.loads(request.get_data(as_text=True))
         print("message", message)
         open_id = message['FromUserName']
+        if message['MsgType'] == 'text' and message['Content'] == '1':
+            msg = 'Bugaboo官方账号'
+        else:
+            msg = '请关注公众号：Bugaboo官方账号'
         data = dict()
         data.update({
             "touser": open_id,
             "msgtype": "text",
-            "text": {"content": "你好，有什么需要帮助的吗？"}
+            "text": {"content": msg}
         })
         return jsonify(data)
 
