@@ -3,6 +3,7 @@ import random
 import requests
 import json
 import time
+import hashlib
 from flask import Flask, jsonify, request, Response
 from config import config
 
@@ -225,6 +226,31 @@ def upload():
         'data': image
     })
     return jsonify(res)
+
+
+@app.route('/online/service', methods=['GET', 'POST'])
+def online_service():
+    if request.method == 'GET':
+        signature = request.values.get("signature")
+        timestamp = request.values.get("timestamp")
+        nonce = request.values.get("nonce")
+        echostr = request.values.get("echostr")
+        token = 'wx.bestbwzs.com'
+        params = [token, timestamp, nonce]
+        params.sort()
+        out = ''
+        for i in params:
+            out += i
+        sign = hashlib.sha1(out).hexdigest()
+        if sign == signature:
+            return echostr
+        else:
+            return 0
+    if request.method == 'POST':
+        temp = request.values
+        print(temp)
+        return None
+
 
 if __name__ == '__main__':
     app.run()
