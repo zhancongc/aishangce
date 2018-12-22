@@ -235,15 +235,19 @@ def online_service():
         timestamp = request.values.get("timestamp")
         nonce = request.values.get("nonce")
         echostr = request.values.get("echostr")
+        print("signature, timestamp, nonce, echostr", signature, timestamp, nonce, echostr)
         if signature is None or timestamp is None or nonce is None or echostr is None:
             return 0
         token = 'wx.bestbwzs.com'
-        params = [token, timestamp, nonce]
+        params = list()
+        params.append(token)
+        params.append(timestamp)
+        params.append(nonce)
         params.sort()
         out = ''
         for i in params:
             out += i
-        sign = hashlib.sha1(out).hexdigest()
+        sign = hashlib.sha1(out.encode()).hexdigest()
         if sign == signature:
             return echostr
         else:
